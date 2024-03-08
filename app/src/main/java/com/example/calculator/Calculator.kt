@@ -1,50 +1,51 @@
 package com.example.calculator
 
-open class Calculator(){
-    fun cal1(){
-        var flag:Int=0
-        if(flag==0) println("1~4 사이의 숫자를 입력하시면 숫자에 해당하는 연산자가 출력됩니다: (1: +, 2: -, 3: *, 4: /)")
-        when(readln().toInt()){
-            1->println("+")
-            2->println("-")
-            3->println("*")
-            4->println("/")
-            else -> {
-                println("1~4에 해당하는 숫자를 입력해주세요.")
-                flag=1
-                cal1()
-            }
+open class Calculator(open var num1: Double, open var num2: Double){
+    open fun add(): Double = num1+num2
+    open fun sub(): Double = num1-num2
+    open fun mul(): Double = num1*num2
+    open fun div(): Double {
+        while(num2==0.0) {
+            println("나누는 수는 0이 될 수 없습니다. num2를 다시 입력해주세요:")
+            num2=readln().toDouble()
         }
-        println("종료되었습니다.")
+        return num1/num2
     }
+    open fun rem(): Double = num1%num2
+}
+open class Calc(open var num1:Double, open var num2:Double){
+    open fun calculate():Double{
+        return num1+num2
+    }
+}
 
-    fun cal2(){
-        var flag:Int=0
-        var num = 0
-        while(true){
-            if(flag==0) println("1~5 사이의 숫자를 입력하시면 숫자에 해당하는 연산자가 출력됩니다 (1: +, 2: -, 3: *, 4: /, 5: %). <-1 입력 시 종료>")
-            num=readln().toInt()
-            if(num==-1) {
-                println("종료되었습니다.")
-                break
-            }
-            else{
-                if(num in 1..5){
-                    when(num){
-                        1->println("+")
-                        2->println("-")
-                        3->println("*")
-                        4->println("/")
-                        else->println("%")
-                    }
-                    flag=0
-                }
-                else{
-                    println("1~5에 해당하는 숫자를 입력해주세요.")
-                    flag=1
-                }
-            }
+class Add(override var num1:Double, override var num2:Double):Calc(num1,num2){
+    override fun calculate(): Double {
+        return num1+num2
+    }
+}
+class Sub(override var num1:Double, override var num2:Double):Calc(num1,num2){
+    override fun calculate(): Double {
+        return num1-num2
+    }
+}
+class Mul(override var num1:Double, override var num2:Double):Calc(num1,num2){
+    override fun calculate(): Double {
+        return num1*num2
+    }
+}
+class Div(override var num1:Double, override var num2:Double):Calc(num1,num2){
+    override fun calculate(): Double {
+        while(num2==0.0) {
+            println("나누는 수는 0이 될 수 없습니다. num2를 다시 입력해주세요:")
+            num2=readln().toDouble()
         }
+        return num1/num2
+    }
+}
+class Rem(override var num1:Double, override var num2:Double):Calc(num1,num2){
+    override fun calculate(): Double {
+        return num1%num2
     }
 }
 
