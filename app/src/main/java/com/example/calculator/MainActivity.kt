@@ -15,24 +15,29 @@ fun main(){
             1->{
                 println("테스트하고 싶으신 연산자 번호를 입력해주세요: (더하기: 1, 빼기: 2, 곱하기: 3, 나누기: 4)")
                 cal = readln().toInt()
-                while(cal>4 || cal<1) {
-                    println("1~4 사이의 수를 입력해주세요: (더하기: 1, 빼기: 2, 곱하기: 3, 나누기: 4)")
+                var invalidInputCount=0
+                while((cal>4 || cal<1)&&invalidInputCount<5) {
+                    println("1~4 사이의 수를 입력해주세요: (더하기: 1, 빼기: 2, 곱하기: 3, 나누기: 4) (입력 오류:${++invalidInputCount}/5(회))")
                     cal = readln().toInt()
                 }
-
-                print("숫자 1 입력: ")
-                num1 = readln().toDouble()
-                print("숫자 2 입력: ")
-                num2 = readln().toDouble()
-                val result = Calculator(num1, num2)
-
-                when(cal){
-                    1->println("$num1 + $num2 = ${result.add()}")
-                    2->println("$num1 - $num2 = ${result.sub()}")
-                    3->println("$num1 * $num2 = ${result.mul()}")
-                    else-> println("$num1 / $num2 = ${result.div()}")
+                if(invalidInputCount==5) {
+                    println("입력 오류 5회로 레벨 1 테스트가 종료되었습니다. 테스트를 계속하시려면 ")
                 }
-                print("레벨 1 테스트가 종료되었습니다. 테스트를 계속하시려면 ")
+                else{
+                    print("숫자 1 입력: ")
+                    num1 = readln().toDouble()
+                    print("숫자 2 입력: ")
+                    num2 = readln().toDouble()
+                    val result = Calculator(num1, num2)
+
+                    when(cal){
+                        1->println("$num1 + $num2 = ${result.add()}")
+                        2->println("$num1 - $num2 = ${result.sub()}")
+                        3->println("$num1 * $num2 = ${result.mul()}")
+                        else-> println("$num1 / $num2 = ${result.div()}")
+                    }
+                    print("레벨 1 테스트가 종료되었습니다. 테스트를 계속하시려면 ")
+                }
             }
             //레벨 2~3
             2,3->{
@@ -44,11 +49,13 @@ fun main(){
                         break
                     }
                     else{
-                        while(cal!=-1&&(cal<1 || cal>5)){
-                            println("1~5 사이의 수를 입력해주세요: (더하기: 1, 빼기: 2, 곱하기: 3, 나누기: 4, 나머지: 5); -1 입력 시 종료됩니다.")
+                        var invalidInputCount=0
+                        while(cal!=-1&&(cal<1 || cal>5)&&invalidInputCount<5){
+                            println("1~5 사이의 수를 입력해주세요: (더하기: 1, 빼기: 2, 곱하기: 3, 나누기: 4, 나머지: 5); -1 입력 시 종료됩니다. (입력 오류:${++invalidInputCount}/5(회))")
                             cal = readln().toInt()
                         }
-                        if(cal==-1) {
+                        if(cal==-1 || invalidInputCount==5) {
+                            if(invalidInputCount==5) print("입력 오류 5회로 ")
                             print("레벨 $testNum 테스트가 종료되었습니다. 테스트를 계속하시려면 ")
                             break
                         }
@@ -84,13 +91,20 @@ fun main(){
             else->{
                 println("숫자와 연산자(+, -, *, /)를 활용한 올바른 식을 띄어쓰기 없이 한 문장으로 입력해주세요 (예: -1*7+635/9-0*10):")
                 var formula = readln()
-                if (formula[0]=='-'){
-                    var tmp = "0"
-                    tmp+=formula
-                    formula=tmp
+                var invalidInputCount=0
+                while (!isValidFormulaInput(formula) && invalidInputCount<5) {
+                    println("숫자와 연산자(+, -, *, /)를 활용한 올바른 식을 띄어쓰기 없이 한 문장으로 입력해주세요. (예: -1*7+635/9-0*10) (입력 오류:${++invalidInputCount}/5(회))")
+                    formula = readln()
                 }
-                println("위 식의 결과는 ${calculate(formula)} 입니다.")
-                println("테스트 4가 종료되었습니다. 테스트를 계속하시려면 ")
+                if(invalidInputCount==5) {
+                    println("입력 오류 5회로 레벨 4 테스트가 종료되었습니다. 테스트를 계속하시려면 ")
+                }
+                else{
+                    if (formula[0]=='-')formula = "0$formula"
+
+                    println("위 식의 결과는 ${calculate(formula)} 입니다.")
+                    println("레벨 4 테스트가 종료되었습니다. 테스트를 계속하시려면 ")
+                }
             }
         }
     }
@@ -160,4 +174,9 @@ fun calculate(formula: String): Double {
     }
 
     return tokens.first().toDouble()
+}
+
+fun isValidFormulaInput(formula: String): Boolean {
+    val regex = Regex("^-?[0-9]+([+\\-*/]-?[0-9]+)*$")
+    return regex.matches(formula)
 }
