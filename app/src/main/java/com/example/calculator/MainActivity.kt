@@ -13,14 +13,15 @@ fun main(){
         when(testNum){
             //레벨 1
             1->{
+                println("테스트하고 싶으신 연산자 번호를 입력해주세요: (더하기: 1, 빼기: 2, 곱하기: 3, 나누기: 4)")
+                cal = readln().toInt()
+
                 print("숫자 1: ")
                 num1 = readln().toDouble()
                 print("숫자 2: ")
                 num2 = readln().toDouble()
                 val result = Calculator(num1, num2)
 
-                println("테스트하고 싶으신 연산자 번호를 입력해주세요: (더하기: 1, 빼기: 2, 곱하기: 3, 나누기: 4)")
-                cal = readln().toInt()
                 while(cal>4 || cal<1) {
                     println("1~4 사이의 수를 입력해주세요: (더하기: 1, 빼기: 2, 곱하기: 3, 나누기: 4)")
                     cal = readln().toInt()
