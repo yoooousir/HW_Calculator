@@ -1,10 +1,14 @@
 package com.example.calculator
 fun main(){
     var testNum:Int = 0
+    println("과제 테스트를 시작합니다.")
     while(true){
         println("테스트하고 싶으신 레벨의 숫자(1~4)를 입력해주세요. 이 외 숫자 입력 시 종료됩니다.")
         testNum = readln().toInt()
-        if(testNum<1 || testNum>4) break
+        if(testNum<1 || testNum>4) {
+            println("과제 테스트가 종료되었습니다.")
+            break
+        }
 
         var num1:Double=0.0
         var num2:Double=0.0
