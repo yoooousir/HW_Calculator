@@ -1,5 +1,4 @@
 package com.example.calculator
-
 open class Calculator(open var num1: Double, open var num2: Double){
     open fun add(): Double = num1+num2
     open fun sub(): Double = num1-num2

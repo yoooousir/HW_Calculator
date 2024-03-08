@@ -1,5 +1,4 @@
 package com.example.calculator
-
 fun main(){
     var testNum:Int = 0
     while(true){
@@ -12,15 +11,17 @@ fun main(){
         var cal:Int=0
 
         when(testNum){
+            //레벨 1
             1->{
+                println("테스트하고 싶으신 연산자 번호를 입력해주세요: (더하기: 1, 빼기: 2, 곱하기: 3, 나누기: 4)")
+                cal = readln().toInt()
+
                 print("숫자 1: ")
                 num1 = readln().toDouble()
                 print("숫자 2: ")
                 num2 = readln().toDouble()
                 val result = Calculator(num1, num2)
 
-                println("테스트하고 싶으신 연산자 번호를 입력해주세요: (더하기: 1, 빼기: 2, 곱하기: 3, 나누기: 4)")
-                cal = readln().toInt()
                 while(cal>4 || cal<1) {
                     println("1~4 사이의 수를 입력해주세요: (더하기: 1, 빼기: 2, 곱하기: 3, 나누기: 4)")
                     cal = readln().toInt()
@@ -33,7 +34,7 @@ fun main(){
                 }
                 print("레벨 1 테스트가 종료되었습니다. 테스트를 계속하시려면 ")
             }
-
+            //레벨 2~3
             else->{
                 while(true){
                     println("테스트하고 싶으신 연산자 번호(1~5)를 입력해주세요: (더하기: 1, 빼기: 2, 곱하기: 3, 나누기: 4, 나머지: 5); -1 입력 시 종료됩니다.")
